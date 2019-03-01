@@ -1,6 +1,6 @@
 # Flight Schedule  Using lufthansa Api
 
-<img src="https://github.com/kevinjam/Flight-Schedule/blob/master/art/main.jpg" height="500">| <img src="https://github.com/kevinjam/Flight-Schedule/blob/master/art/main.jpg" height="500">
+<img src="https://github.com/kevinjam/Flight-Schedule/blob/master/art/main.jpg" height="500">| <img src="https://github.com/kevinjam/Flight-Schedule/blob/master/art/selectFly.jpg" height="500">
 
 ## Getting Started
 
