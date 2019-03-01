@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:shadow="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:id="@+id/goto_map">
+
+
+    <com.dd.ShadowLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            shadow:sl_dx="2dp"
+            shadow:sl_dy="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="1dp"
+            shadow:sl_shadowColor="#11e1e2e4">
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:ignore="ContentDescription"
+                android:elevation="4dp"
+                android:background="@drawable/shadow"
+        >
+
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13.3dp"
+                        android:layout_marginLeft="11.7dp"
+                        android:layout_marginRight="13dp"
+                        android:orientation="horizontal">
+
+                    <ImageView
+                            android:id="@+id/image"
+                            android:layout_width="90dp"
+                            android:layout_height="16dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/jetaiways"/>
+
+                    <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Medium
+                            android:id="@+id/txt_totalDuration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14.3sp"
+                            android:layout_weight="1"
+                            android:textColor="#1faef3"
+                            android:gravity="right"
+                            android:text="Rs. 52,000"
+                    />
+
+
+                </LinearLayout>
+
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.7dp"
+                        android:layout_marginTop="10.3dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="#efefef"/>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13.7dp"
+                        android:layout_marginLeft="11dp"
+                        android:orientation="horizontal">
+
+                    <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                        <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Medium
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="11.7sp"
+                                android:textColor="#4b4949"
+                                android:text=""
+                                android:id="@+id/txtDeparture"
+                        />
+
+
+                        <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Medium
+                                android:id="@+id/departure_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="11.7sp"
+                                android:textColor="#a9a9a9"
+                                android:layout_marginTop="3dp"
+                                android:text="12:10"
+                        />
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                        <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Medium
+                                android:id="@+id/flight_datails"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="13.3sp"
+                                android:textColor="#4b4949"
+                                android:text="13h 50m"
+                        />
+
+
+                        <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Medium
+                                android:id="@+id/stop"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="11.7sp"
+                                android:textColor="#a9a9a9"
+                                android:text="Direct"
+                        />
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:layout_marginRight="13.3dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                        <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Medium
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="11.7sp"
+                                android:textColor="#4b4949"
+                                android:text=""
+                                android:id="@+id/arrival"
+                        />
+
+
+                        <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Medium
+                                android:id="@+id/arrival_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="11.7sp"
+                                android:textColor="#a9a9a9"
+                                android:layout_marginTop="3dp"
+                                android:text="02:00"
+
+                        />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <ImageView
+                        android:layout_width="17dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="9dp"
+                        shadow:srcCompat="@drawable/ic_airplain"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.dd.ShadowLayout>
+</LinearLayout>

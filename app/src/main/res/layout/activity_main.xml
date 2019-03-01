@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:orientation="vertical"
+            android:background="@color/colorPrimary">
+
+        <include
+                layout="@layout/toolbar"
+
+        />
+
+        <LinearLayout
+                android:layout_below="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                <ImageView
+                        android:layout_width="141.3dp"
+                        android:layout_height="17.7dp"
+                        android:src="@drawable/dot_shape"
+                        android:tint="@android:color/white"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                    <ImageView
+                            android:id="@+id/img_departure"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:srcCompat="@drawable/departure"
+                            android:layout_gravity="center"
+                            android:tint="@android:color/white"/>
+
+                    <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Medium
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:includeFontPadding="false"
+                            android:layout_marginBottom="-10dp"
+                            android:gravity="center"
+                            android:textColor="#ffffff"
+                            android:text=""
+                            android:id="@+id/txt_departure_code"
+
+                    />
+                    <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Regular
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:gravity="center"
+                            android:textColor="#ffffff"
+                            android:text="@string/select_departure"
+                            android:id="@+id/txt_departure"
+                            android:layout_marginTop="5dp"
+                    />
+                </LinearLayout>
+
+
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                    <ImageView
+                            android:id="@+id/img_arrival"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:srcCompat="@drawable/arrival"
+                            android:layout_gravity="center"
+                            android:tint="@android:color/white"/>
+
+                    <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Medium
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:includeFontPadding="false"
+                            android:layout_marginBottom="-10dp"
+                            android:layout_weight="1.5"
+                            android:gravity="center"
+                            android:textColor="#ffffff"
+                            android:text=""
+                            android:id="@+id/txt_destination_code"
+                    />
+
+                    <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Regular
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:gravity="center"
+                            android:textColor="#ffffff"
+                            android:text="@string/select_arrival"
+                            android:layout_marginTop="5dp"
+                            android:id="@+id/txt_arrival"
+
+                    />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="7dp"
+                android:orientation="horizontal">
+            <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Medium
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11.7sp"
+                    android:textColor="#ffffff"
+                    android:text="Date: "
+                    android:id="@+id/text_view"
+            />
+
+            <View
+                    android:layout_width="1dp"
+                    android:layout_height="9dp"
+                    android:layout_marginLeft="6dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="6.3dp"
+                    android:background="#FFFFFF"/>
+
+            <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Medium
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11.7sp"
+                    android:textColor="#ffffff"
+                    android:text="PickDate"
+                    android:id="@+id/select_Date"
+            />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"/>
+
+        <LinearLayout
+                android:id="@+id/lyt_no_connection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+            <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:tint="#cccccc"
+                    app:srcCompat="@drawable/ic_signal_wifi_off"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space10"
+                    android:text="There is no Schedule Avaalable"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textColor="@android:color/black"
+
+                    android:textSize="@dimen/txt16" android:textStyle="bold"
+            />
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space5"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:layout_width="@dimen/space15"
+                        android:layout_height="@dimen/space15"
+                        android:layout_marginEnd="@dimen/space5"
+                        android:layout_marginRight="@dimen/space5"
+                        android:tint="#263238"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_refresh"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select aiports to See the schedules"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                        android:textColor="@android:color/black"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="18.3dp"
+                android:clipToPadding="false"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

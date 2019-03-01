@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+android:id="@+id/main_layout"
+        android:background="@drawable/selector_row">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/space10"
+    >
+
+
+        <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:srcCompat="@drawable/air_flight"
+                android:id="@+id/logo"
+                android:foregroundGravity="center"
+                android:layout_marginTop="@dimen/space5"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="1dp"
+                android:layout_marginLeft="60dp"
+        >
+
+            <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Medium
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Aalborg"
+                    android:textColor="#282a2c"
+                    android:textSize="@dimen/txt13"
+                    android:id="@+id/txtairport_name"/>
+
+            <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Regular
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="AAL, Non-stop"
+                    android:textSize="@dimen/txt13"
+                    android:layout_marginTop="5dp"
+                    android:textColor="#8392a7"
+                    android:id="@+id/txt_country_code"/>
+
+        </LinearLayout>
+
+        <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Medium
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DK"
+                android:layout_marginTop="1dp"
+                android:textSize="@dimen/txt11"
+                android:paddingRight="2dp"
+                android:textColor="#282a2c"
+                android:id="@+id/txt_city_code"
+                android:gravity="right"
+        android:visibility="invisible"/>
+
+
+        <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Medium
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="America/New_Yor"
+                android:textSize="@dimen/txt11"
+                android:paddingRight="2dp"
+                android:textColor="#282a2c"
+                android:id="@+id/txt_time_zone"
+                android:layout_below="@+id/txt_city_code"
+                android:gravity="right"
+                android:layout_marginTop="@dimen/space10"
+        />
+
+
+    </RelativeLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="20dp"/>
+
+</LinearLayout>
+
+
