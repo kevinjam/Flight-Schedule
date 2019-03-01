@@ -1,4 +1,4 @@
-package com.interview.safeboda;
+package com.interview.safeboda.common;
 
 import android.view.View;
 import com.interview.safeboda.modelLayer.model.airport.Airport;

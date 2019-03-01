@@ -36,8 +36,8 @@ GlobalScope.launch {
     delay(1000)
 
     //testing
-    gotoMain()
-   // loadToken()
+    //gotoMain()  //TESTING PURPOSE
+   loadToken()
 
 }
 

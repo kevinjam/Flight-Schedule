@@ -10,7 +10,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.interview.safeboda.AirportCallback
+import com.interview.safeboda.common.AirportCallback
 import com.interview.safeboda.R
 import com.interview.safeboda.activities.airport.recycler.AirportAdapter
 import com.interview.safeboda.modelLayer.model.airport.Airport

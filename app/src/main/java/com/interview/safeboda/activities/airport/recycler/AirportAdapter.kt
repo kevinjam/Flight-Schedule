@@ -8,7 +8,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.interview.safeboda.R
 import com.interview.safeboda.modelLayer.model.airport.Airport
-import com.interview.safeboda.AirportCallback
+import com.interview.safeboda.common.AirportCallback
 import io.reactivex.disposables.CompositeDisposable
 
 
