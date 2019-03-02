@@ -12,4 +12,5 @@
     <string name="select_arrival">Select Destination</string>
     <string name="there_is_no_schedule_available">There is no Schedule Available</string>
     <string name="airports">Airports</string>
+    <string name="pick_date">Pick Date</string>
 </resources>

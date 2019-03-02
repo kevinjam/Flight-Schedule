@@ -70,6 +70,7 @@ dependencies {
 
     implementation "com.wdullaer:materialdatetimepicker:$date_picker_version"
     implementation "com.github.dmytrodanylyk.shadow-layout:library:$shadow_layout_version"
+    androidTestImplementation 'androidx.test:rules:1.1.2-alpha01'
 // date & time picker
 
 

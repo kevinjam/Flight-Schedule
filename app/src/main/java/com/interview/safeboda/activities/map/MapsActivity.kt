@@ -60,7 +60,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         googleMap.addPolyline(
             PolylineOptions()
                 .add(departureLatLng, arrivalLatLng)
-                .width(2f)
+                .width(4f)
                 .color(Color.RED))
 
         googleMap.setOnMarkerClickListener (onMarkerClickedListener)
@@ -72,7 +72,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .build()
         val displaySize = Point()
         windowManager.defaultDisplay.getSize(displaySize)
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 150, 30))
 
 
 
@@ -80,12 +80,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         googleMap.addCircle(
             CircleOptions()
                 .center(LatLng(departureAirportLatitude, departureAirportLong))
-                .radius(1000.0)
+                .radius(200.0)
                 .strokeColor(Color.BLUE)
                 .strokeWidth(0f)
                 .fillColor(Color.BLACK)
                 .fillColor(Color.parseColor("#26006ef1"))
         )
+
+        val style = MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json)
+
+        googleMap.setMapStyle(style)
 
 
 

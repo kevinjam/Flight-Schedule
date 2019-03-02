@@ -161,9 +161,9 @@
             <com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Medium
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="11.7sp"
+                    android:textSize="@dimen/txt16"
                     android:textColor="#ffffff"
-                    android:text="PickDate"
+                    android:text="@string/pick_date"
                     android:id="@+id/select_Date"
             />
 
