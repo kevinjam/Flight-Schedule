@@ -195,14 +195,14 @@
             <ImageView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:tint="#cccccc"
-                    app:srcCompat="@drawable/ic_signal_wifi_off"/>
+                    android:tint="@android:color/black"
+                    app:srcCompat="@drawable/air_flight"/>
 
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space10"
-                    android:text="There is no Schedule Avaalable"
+                    android:text="@string/there_is_no_schedule_available"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                     android:textColor="@android:color/black"
 
@@ -228,7 +228,7 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Select aiports to See the schedules"
+                        android:text="Select aiports Please"
                         android:textAlignment="center"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                         android:textColor="@android:color/black"/>

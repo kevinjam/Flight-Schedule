@@ -9,12 +9,25 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.interview.safeboda.activities.map.MapsActivity
 import com.interview.safeboda.R
+import com.interview.safeboda.activities.airport.viewmodel.AirportViewModel
+import com.interview.safeboda.common.AirportCallback
 import com.interview.safeboda.modelLayer.model.schedule.Schedule
 import com.interview.safeboda.utils.helper.Helper
 
 
-class ScheduleAdapter(var scheduleList: List<Schedule>, var context: Context) :
+
+
+class ScheduleAdapter(
+    var scheduleList: List<Schedule>,
+    var context: Context ,
+    var  mOnClickListener:ListItemClickListener
+) :
     androidx.recyclerview.widget.RecyclerView.Adapter<ScheduleAdapter.ViewHolder>() {
+
+
+    interface ListItemClickListener {
+        fun onListItemClick(clickedItemIndex: Int)
+    }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
 
@@ -31,8 +44,9 @@ class ScheduleAdapter(var scheduleList: List<Schedule>, var context: Context) :
     }
 
 
-    inner class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
-//        val date = itemView.findViewById<TextView>(R.id.txtDate)
+    inner class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
+        //        val date = itemView.findViewById<TextView>(R.id.txtDate)
         val totalDuration = itemView.findViewById<TextView>(R.id.txt_totalDuration)
         val departure = itemView.findViewById<TextView>(R.id.txtDeparture)
         val arival = itemView.findViewById<TextView>(R.id.arrival)
@@ -43,9 +57,12 @@ class ScheduleAdapter(var scheduleList: List<Schedule>, var context: Context) :
         val gotoMap = itemView.findViewById<LinearLayout>(R.id.goto_map)
 
 
+
         fun bindViews(schedule: Schedule, context: Context) {
             totalDuration.text = schedule.total.Duration
-    schedule.flight.forEachIndexed { index, responseFlight ->
+
+            Helper.log("Response is $schedule")
+            schedule.flight.forEachIndexed { index, responseFlight ->
                 departure.text = responseFlight.Departure.AirportCode
                 departureTime.text = Helper.dateConversion(responseFlight.Departure.ScheduledTimeLocal.DateTime)
                 arival.text = responseFlight.Arrival.AirportCode
@@ -54,10 +71,12 @@ class ScheduleAdapter(var scheduleList: List<Schedule>, var context: Context) :
 
             }
 
-         //   scheduleList.forEachIndexed { index, responseFlight ->
+            itemView.setOnClickListener(this)
 
-               // val gson  = Gson()
-             //   val json = gson.toJson(schedule.flight)
+            //   scheduleList.forEachIndexed { index, responseFlight ->
+
+            // val gson  = Gson()
+            //   val json = gson.toJson(schedule.flight)
 //                val response = Helper.gson.fromJson(json, Flight::class.java)
 //
 //                Helper.log(response.toString())
@@ -68,13 +87,21 @@ class ScheduleAdapter(var scheduleList: List<Schedule>, var context: Context) :
 //                arrivaTime.text = Helper.dateConversion(response.Arrival.ScheduledTimeLocal.DateTime)
 //                flightDetails.text = response.MarketingCarrier.FlightNumber.toString()
 
-          //  }
+            //  }
+
+
+//
+//            gotoMap.setOnClickListener {
+//
+//                println("😓Selected Item ${schedule.flight}")
+//                context.startActivity(Intent(context, MapsActivity::class.java))
+//            }
+        }
 
 
 
-            gotoMap.setOnClickListener {
-                context.startActivity(Intent(context, MapsActivity::class.java))
-            }
+        override fun onClick(v: View?) {
+            mOnClickListener.onListItemClick(adapterPosition)
         }
 
     }
@@ -82,5 +109,5 @@ class ScheduleAdapter(var scheduleList: List<Schedule>, var context: Context) :
     //2019-02-27T06:55
 
 
-   // MMMMM dd,yyyy
+    // MMMMM dd,yyyy
 }

@@ -9,16 +9,23 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.snackbar.Snackbar
 import com.interview.safeboda.utils.helper.Apps
 import com.interview.safeboda.R
+import com.interview.safeboda.activities.airport.AirportActivity
 import com.interview.safeboda.activities.airport.FlightPresenter
+import com.interview.safeboda.activities.airport.recycler.AirportAdapter
+import com.interview.safeboda.activities.airport.viewmodel.AirportViewModel
+import com.interview.safeboda.activities.map.MapsActivity
+import com.interview.safeboda.common.Constants
+import com.interview.safeboda.common.Constants.Companion.AIRPORT_ARRIVAL
+import com.interview.safeboda.common.Constants.Companion.AIRPORT_ORIGINE
 import com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Medium
 import com.interview.safeboda.modelLayer.model.airport.Airport
 import com.interview.safeboda.modelLayer.model.schedule.Schedule
 import com.interview.safeboda.common.Constants.Companion.AIRPORT_ORIGIN_DEPARTURE
 import com.interview.safeboda.common.disposedBy
 import com.interview.safeboda.utils.helper.Helper
-import com.interview.safeboda.viewmodel.ShareFlightViewModel
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -29,9 +36,12 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 
-class MainActivity : AppCompatActivity() {
 
- lateinit var adapter: ScheduleAdapter
+
+class MainActivity : AppCompatActivity() , ScheduleAdapter.ListItemClickListener {
+
+
+    lateinit var adapter: ScheduleAdapter
 
     private val DEPARTURE_AIRPORT_CODE = 8
     private val ARRIVAL_AIRPORT_CODE = 10
@@ -42,12 +52,18 @@ class MainActivity : AppCompatActivity() {
 
     var composit = CompositeDisposable()
 
-    private var mViewModel: ShareFlightViewModel? = null
+    private var mViewModel: AirportViewModel? = null
+
+    private var departureModel :Airport ? = null
+    private var arrivalModel :Airport ? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        mViewModel = ViewModelProviders.of(this).get(AirportViewModel::class.java)
+
 
         initToolbar()
         progress_bar.visibility = View.GONE
@@ -72,6 +88,7 @@ class MainActivity : AppCompatActivity() {
         select_Date.setOnClickListener {
             selectedDate(select_Date)
         }
+
 
 
     }
@@ -109,25 +126,13 @@ class MainActivity : AppCompatActivity() {
     }
     //endregion
 
-    private fun initViewModel(departurE_AIRPORT_CODE: Int, arrivaL_AIRPORT_CODE: Int) {
 
-        val airportsObserver = Observer<String> { notView ->
-            println("============What i Retrieve is $notView")
-            println("============What i Retrieve is $notView")
-
-        }
-
-        mViewModel = ViewModelProviders.of(this).get(ShareFlightViewModel::class.java)
-        mViewModel!!.departureLiveData.observe(this, airportsObserver)
-
-
-    }
 
 
     //region Check airport
     private fun checkScheduleAirport(arrive: String, position: Int) {
         println("is------ Result is now  and $position")
-        val intent =(Intent(this, ScheduleActivity::class.java))
+        val intent =(Intent(this, AirportActivity::class.java))
         startActivityForResult(intent, position)
 
     }
@@ -139,7 +144,7 @@ class MainActivity : AppCompatActivity() {
         Helper.log("scheduleList Response $scheduleList")
         progress_bar.visibility = View.GONE
         lyt_no_connection.visibility = View.GONE
-        adapter = ScheduleAdapter(scheduleList, this@MainActivity)
+        adapter = ScheduleAdapter(scheduleList, this@MainActivity, this)
         recycler_schedule.adapter = adapter
 
 
@@ -174,14 +179,19 @@ class MainActivity : AppCompatActivity() {
             }
 
         }else{
+            //AAL,ABJ
             //display an error
             println("display an errok")
         }
     }
 
     @SuppressLint("CheckResult")
-    private fun fetchAllFlight(departureAirport: String, arrival: String, dateSelected: String) {
-        presenter.getflight(departureAirport, arrival, dateSelected)
+    private fun fetchAllFlight(departureAirport: String, arrival: String, dateTime: String) {
+
+       println("Request $departureAirport," +
+               "$arrival," +
+               "$dateTime")
+        presenter.getflight(departureAirport, arrival, dateTime)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 flight->
@@ -193,6 +203,7 @@ class MainActivity : AppCompatActivity() {
                 flightError->
                 println("Error an👹 errok ${flightError.message}")
                 progress_bar.visibility = View.GONE
+                lyt_no_connection.visibility = View.VISIBLE
 
 
 
@@ -216,20 +227,14 @@ class MainActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             val airport = deserializeInput(data)
             println("onActivityResult ====== $airport")
-            // btn1 = true
             if (airport != null) {
-//                val selectAirportOrigin = scheduleAirport.airporCode
-//                // departureAirportCode = selectAirportOrigin
-//                println("onActivityResult$selectAirportOrigin ")
-                //  initViewModel(DEPARTURE_AIRPORT_CODE,ARRIVAL_AIRPORT_CODE)
                 if (requestCode == DEPARTURE_AIRPORT_CODE) {
                     println("DEPARTURE_AIRPORT_NAME ------${airport.name.name.countryName} ")
                     txt_departure.text = airport.name.name.countryName
                     txt_departure_code.text = airport.airporCode
 
                     departureCode = airport.airporCode
-//                        mViewModel!!.setFlight(departureCode)
-
+                    departureModel = airport
                     Apps.aiport.departureAirport = departureCode
                     //save I
                     collectAirportCode(departureCode, arrivalCode)
@@ -240,8 +245,9 @@ class MainActivity : AppCompatActivity() {
                     txt_arrival.text = airport.name.name.countryName
                     txt_destination_code.text = airport.airporCode
                     arrivalCode = airport.airporCode
-                    // mViewModel!!.setarrivalAirpot(arrivalCode)
                     collectAirportCode(departureCode, arrivalCode)
+                    arrivalModel = airport
+
 
 
 
@@ -256,12 +262,16 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
+
+    //region DESERIALIZATION
     fun deserializeInput(data: Intent?): Airport? {
         return  data!!.getSerializableExtra(AIRPORT_ORIGIN_DEPARTURE) as? Airport
     }
+    //endregion
 
     fun gotoAirportSchedule(){
-        val intent =(Intent(this, ScheduleActivity::class.java))
+        val intent =(Intent(this, AirportActivity::class.java))
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
@@ -269,6 +279,16 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
+    override fun onListItemClick(clickedItemIndex: Int) {
+        val intent = Intent(this, MapsActivity::class.java)
+        intent.putExtra(AIRPORT_ORIGINE, departureModel)
+        intent.putExtra(AIRPORT_ARRIVAL, arrivalModel)
+        startActivity(intent)
+
+
+
+    }
 
 
 }

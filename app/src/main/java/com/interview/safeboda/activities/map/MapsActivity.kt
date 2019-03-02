@@ -1,73 +1,120 @@
 package com.interview.safeboda.activities.map
 
+import android.graphics.Color
+import android.graphics.Point
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.google.android.gms.maps.*
 
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.*
 import com.interview.safeboda.R
+import com.interview.safeboda.common.Constants.Companion.AIRPORT_ARRIVAL
+import com.interview.safeboda.common.Constants.Companion.AIRPORT_ORIGINE
+import com.interview.safeboda.modelLayer.model.airport.Airport
+import kotlinx.android.synthetic.main.activity_maps.*
+
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private lateinit var mMap: GoogleMap
+    private lateinit var googleMap: GoogleMap
+
+    private var departure_airport:Airport?= null
+    private var arrival_airport:Airport?= null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+
+        departure_airport= intent.getSerializableExtra(AIRPORT_ORIGINE) as Airport
+        arrival_airport= intent.getSerializableExtra(AIRPORT_ARRIVAL) as Airport
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+
+
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
+    override fun onMapReady(myMap: GoogleMap) {
+        googleMap = myMap
 
-        val departureAirport =57.0928 //latitude
-        val arrivalAirport =9.8492 //logitude
-        val departureLatLng = LatLng(departureAirport, arrivalAirport)
-        googleMap.addMarker(MarkerOptions().position(departureLatLng).title("Kampala"))
+        val departureAirportLatitude =  departure_airport!!.position.coordinates.latitude  //57.0928 //latitude
+        val departureAirportLong =departure_airport!!.position.coordinates.longitude //9.8492 //longitude
+
+        arrival_txt.text = departureAirportLatitude.toString()
+
+
+        val departureLatLng = LatLng(departureAirportLatitude, departureAirportLong)
+       val deparMarker = googleMap.addMarker(MarkerOptions().position(departureLatLng).title(departure_airport!!.name.name.countryName))
+        deparMarker.showInfoWindow()
 
 
 
-        val arrivalLatLng = LatLng(52.56027778, 3.29555556)
-        googleMap.addMarker(MarkerOptions().position(arrivalLatLng).title("Rwanda"))
+        val arrivalLatLng = LatLng(arrival_airport!!.position.coordinates.latitude,arrival_airport!!.position.coordinates.latitude)
+        val arrivMarket =googleMap.addMarker(MarkerOptions().position(arrivalLatLng).title(arrival_airport!!.name.name.countryName))
+        arrivMarket.showInfoWindow()
+
 
         googleMap.addPolyline(
             PolylineOptions()
                 .add(departureLatLng, arrivalLatLng)
-                .width(5f)
-                .color(R.color.colorPrimary))
+                .width(2f)
+                .color(Color.RED))
+
+        googleMap.setOnMarkerClickListener (onMarkerClickedListener)
 
 
-        val latLngBounds = LatLngBounds.Builder()
+        val bounds = LatLngBounds.Builder()
             .include(departureLatLng)
             .include(arrivalLatLng)
             .build()
+        val displaySize = Point()
+        windowManager.defaultDisplay.getSize(displaySize)
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30))
 
-        val zoomPadding = 200
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, zoomPadding))
 
 
-        // Add a marker in Sydney and move the camera
-//        val sydney = LatLng(-34.0, 151.0)
-//        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+
+        googleMap.addCircle(
+            CircleOptions()
+                .center(LatLng(departureAirportLatitude, departureAirportLong))
+                .radius(1000.0)
+                .strokeColor(Color.BLUE)
+                .strokeWidth(0f)
+                .fillColor(Color.BLACK)
+                .fillColor(Color.parseColor("#26006ef1"))
+        )
+
+
+
+        // create marker
+//        val marker = MarkerOptions().position(departureLatLng).title("Set Pickup Point")
+//        // adding marker
+//        googleMap.addMarker(marker)
+//
+//        marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+//
+
+        val cameraPosition = CameraPosition.Builder().target(
+            arrivalLatLng
+        ).zoom(10f).build()
+
+
+        googleMap.animateCamera(
+            CameraUpdateFactory.newCameraPosition(cameraPosition)
+        )
+
     }
+
+    private val onMarkerClickedListener = GoogleMap.OnMarkerClickListener { marker ->
+        if (marker.isInfoWindowShown) {
+            marker.showInfoWindow()
+        } else {
+            marker.showInfoWindow()
+        }
+        true
+    }
+
 }

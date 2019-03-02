@@ -19,7 +19,7 @@
             android:theme="@style/AppTheme">
         <activity android:name=".activities.schedules.MainActivity"/>
         <activity
-                android:name=".activities.schedules.ScheduleActivity"
+                android:name=".activities.airport.AirportActivity"
                 android:noHistory="true"
                 android:screenOrientation="portrait"
            />

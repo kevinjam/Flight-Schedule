@@ -12,4 +12,6 @@
     <dimen name="space18">18dp</dimen>
     <dimen name="space15">15dp</dimen>
     <dimen name="space30">30dp</dimen>
+    <dimen name="space19">19dp</dimen>
+    <dimen name="txt17">17sp</dimen>
 </resources>

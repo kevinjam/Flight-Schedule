@@ -1,4 +1,4 @@
-package com.interview.safeboda.activities.schedules
+package com.interview.safeboda.activities.airport
 
 import android.app.Activity
 import android.content.Intent
@@ -8,11 +8,14 @@ import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.interview.safeboda.common.AirportCallback
 import com.interview.safeboda.R
 import com.interview.safeboda.activities.airport.recycler.AirportAdapter
+import com.interview.safeboda.activities.airport.viewmodel.AirportViewModel
+import com.interview.safeboda.activities.schedules.SchedulePresenter
 import com.interview.safeboda.modelLayer.model.airport.Airport
 import com.interview.safeboda.modelLayer.model.airport.Payload
 import com.interview.safeboda.common.Constants.Companion.AIRPORT_ORIGIN_DEPARTURE
@@ -26,7 +29,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
-class ScheduleActivity : AppCompatActivity(), AirportCallback, View.OnClickListener{
+class AirportActivity : AppCompatActivity(), AirportCallback, View.OnClickListener{
 
 
 
@@ -34,7 +37,7 @@ class ScheduleActivity : AppCompatActivity(), AirportCallback, View.OnClickListe
     lateinit var airpline:List<Airport>
      var airportObject:Airport?= null
     private var parent_view: View? = null
-    private var presenter=SchedulePresenter()
+    private var presenter= SchedulePresenter()
 
 
     override fun onMethodCallback(view: View,airport: Airport?) {
@@ -56,7 +59,6 @@ class ScheduleActivity : AppCompatActivity(), AirportCallback, View.OnClickListe
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         parent_view = findViewById(android.R.id.content)
-
 
         attachUI()
 
@@ -133,12 +135,13 @@ class ScheduleActivity : AppCompatActivity(), AirportCallback, View.OnClickListe
         val list = airpline as ArrayList<Airport>
         airplaine_recycler.visibility = View.VISIBLE
         progress_circular.visibility = View.GONE
-         val adapter = AirportAdapter(list, this@ScheduleActivity)
+         val adapter = AirportAdapter(list, this@AirportActivity)
         airplaine_recycler.adapter = adapter
 
 
         adapter.setOnItemClickListener(object : AirportAdapter.OnItemClickListener {
             override fun onItemClick(view: View, obj: Airport, position: Int) {
+
                 Snackbar.make(parent_view!!, "airport : " + obj.name.name.countryName+ " Selected", Snackbar.LENGTH_SHORT).show()
 
 

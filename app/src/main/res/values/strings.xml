@@ -10,4 +10,6 @@
     <string name="arrival">Arrival</string>
     <string name="select_departure">Select Departure</string>
     <string name="select_arrival">Select Destination</string>
+    <string name="there_is_no_schedule_available">There is no Schedule Available</string>
+    <string name="airports">Airports</string>
 </resources>

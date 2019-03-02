@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.interview.safeboda.R
+import com.interview.safeboda.activities.airport.viewmodel.AirportViewModel
 import com.interview.safeboda.modelLayer.model.airport.Airport
 import com.interview.safeboda.common.AirportCallback
 import io.reactivex.disposables.CompositeDisposable
@@ -15,6 +16,7 @@ import io.reactivex.disposables.CompositeDisposable
 class AirportAdapter(
     val scheduleAirport: ArrayList<Airport>,
     val context: Context
+
 ) : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
     private val comp = CompositeDisposable()
 
@@ -135,7 +137,7 @@ class AirportAdapter(
                 notifyDataSetChanged()
 
 
-//                val intent = Intent(context, Class<ScheduleActivity::class.java>)
+//                val intent = Intent(context, Class<AirportActivity::class.java>)
 //                intent.putExtra(AIRPORT_ORIGIN_DEPARTURE, scheduleAirport)
 //                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 //                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

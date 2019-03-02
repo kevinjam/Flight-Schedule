@@ -15,5 +15,8 @@ class Constants{
          const val CLIENT_SECRET = "5Jx8yza3an"
          const val GRANT_TYPE = "client_credentials"
 
+        const val AIRPORT_ORIGINE="AIRPORT_ORIGINE"
+        const val AIRPORT_ARRIVAL="AIRPORT_ARRIVAL"
+
     }
 }
