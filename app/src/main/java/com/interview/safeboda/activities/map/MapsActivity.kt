@@ -12,6 +12,7 @@ import com.interview.safeboda.common.Constants.Companion.AIRPORT_ARRIVAL
 import com.interview.safeboda.common.Constants.Companion.AIRPORT_ORIGINE
 import com.interview.safeboda.modelLayer.model.airport.Airport
 import kotlinx.android.synthetic.main.activity_maps.*
+import kotlinx.android.synthetic.main.toolbar_map.*
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -34,6 +35,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
 
+        navigation_menu.setOnClickListener {
+            onBackPressed()
+        }
 
     }
 
@@ -119,6 +123,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             marker.showInfoWindow()
         }
         true
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 
 }
