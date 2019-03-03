@@ -69,8 +69,8 @@ object Helper {
             return createService(serviceClass, null)
         }else{
 
-            return createService(serviceClass, Apps.aiport.token.replace("\\s",""))
-//                    return createService(serviceClass, "cn6wdck6z66u4msdfx2gtgbx") //TESTING
+//            return createService(serviceClass, Apps.aiport.token.replace("\\s",""))
+                    return createService(serviceClass, "mqg2vtghsdunwretu2vqf555") //TESTING
 
         }
 
