@@ -3,7 +3,6 @@ package com.interview.safeboda.utils.helper
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.os.Build
@@ -11,7 +10,6 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
 import com.interview.safeboda.BuildConfig
@@ -170,9 +168,8 @@ object Helper {
         snackbar.show()
     }
     fun currentDate() :String{
-        val df = SimpleDateFormat(DATEFORMATER)
-        val current = df.format(Calendar.getInstance().time)
+        val df = SimpleDateFormat(SCHEDULE_DATE)
 
-        return current
+        return df.format(Calendar.getInstance().time)
     }
 }

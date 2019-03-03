@@ -45,8 +45,8 @@ class SplashScreen : AppCompatActivity() {
                 delay(1000)
                 //testing
                 //request Token
-                loadToken()
-               // gotoMain("")  //TESTING PURPOSE
+//                loadToken()
+                gotoMain("")  //TESTING PURPOSE
 
             }
 
