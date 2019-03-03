@@ -2,6 +2,8 @@ package com.interview.safeboda.utils.helper
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Build
 import android.text.TextUtils
 import android.util.Log
@@ -123,4 +125,15 @@ object Helper {
         }
     }
     //endregion
+
+
+
+    //region CHECK INTERNET
+    fun isConnectedToInternet(context: Context):Boolean{
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = cm.activeNetworkInfo
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting
+    }
+    //endregion
+
 }

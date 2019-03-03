@@ -8,6 +8,7 @@ import com.interview.safeboda.utils.helper.Apps
 import com.interview.safeboda.activities.schedules.MainActivity
 import com.interview.safeboda.modelLayer.model.airport.RequestToken
 import com.interview.safeboda.common.disposedBy
+import com.interview.safeboda.utils.helper.Helper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.*
@@ -22,24 +23,27 @@ class SplashScreen : AppCompatActivity() {
 
     val uiDispatcher: CoroutineDispatcher = Dispatchers.Main
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         composit = CompositeDisposable()
 
-        //request Token
-
+        //reset token
+        Apps.aiport.token = ""
+        //
+        println("Tken on Create${ Apps.aiport.token}")
         uiDispatcher
-
-GlobalScope.launch {
-    delay(1000)
-
-    //testing
-    //gotoMain()  //TESTING PURPOSE
-   loadToken()
-
-}
+        if(Helper.isConnectedToInternet(this)){
+            GlobalScope.launch {
+                delay(500)
+                //testing
+                //gotoMain()  //TESTING PURPOSE
+                //request Token
+                loadToken()
+            }
+        }else{
+            //not network .. call snakbar
+            println("No inetenet")
+        }
 
 
     }
@@ -47,28 +51,20 @@ GlobalScope.launch {
     @SuppressLint("CheckResult")
     private fun loadToken() {
         presenter.getToken().observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                    token->
+            .subscribe({ token ->
                 println("😜 Response is $token")
                 checkToken(token)
-            },{
-                error->
-                println("👺 an Error occurred : ${ error.localizedMessage}")
-
+            }, { error ->
+                println("👺 an Error occurred : ${error.localizedMessage}")
                 val e = error; IOException("An Unknow network occurred")
-                println("👺 an Error occurred : ${ e.localizedMessage}")
-                Apps.aiport.token=""
-                gotoMain()
-
-
+                println("👺 an Error occurred : ${e.localizedMessage}")
             }).disposedBy(composit)
     }
 
     private fun checkToken(token: RequestToken?) {
-        if(token != null){
+        if (token != null) {
             //save Token Using viewModel
-            Apps.aiport.token = token.access_token
-            gotoMain()
+            gotoMain(token.access_token)
         }
     }
 
@@ -78,11 +74,15 @@ GlobalScope.launch {
         composit.clear()
     }
 
-    private fun gotoMain() {
+    private fun gotoMain(access_token: String) {
+        Apps.aiport.token = access_token
+        println("Tken on Create$access_token")
+
         val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     }
-
 
 
 }
