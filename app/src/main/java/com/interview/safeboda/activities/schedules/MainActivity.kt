@@ -158,18 +158,20 @@ class MainActivity : AppCompatActivity() , ScheduleAdapter.ListItemClickListener
             if (Apps.aiport.departureAirport.isNotEmpty() && arrival.isNotEmpty()){
                 println("Not Empty $dateSelected")
                 println("Holder wwww  ${Apps.aiport.departureAirport} wwwwww kakak0002 $arrival")
-                if (dateSelected != null){
-                    println("dateSelected $dateSelected")
-                    //fetchFlight(Apps.aiport.departureAirport, arrival,dateSelected)
-                    //realSingleExample(Apps.aiport.departureAirport, arrival,dateSelected)
-                    progress_bar.visibility = View.VISIBLE
-                    GlobalScope.launch {
-                        fetchAllFlight(Apps.aiport.departureAirport, arrival,dateSelected!!)
-                    }
-                }else{
-                    dateSelected =Helper.currentDate()
-//                    Helper.snakbar(parent_view!!, getString(R.string.select_travel_date),"")
-
+//                if (dateSelected != null){
+//                    println("dateSelected $dateSelected")
+//                    //fetchFlight(Apps.aiport.departureAirport, arrival,dateSelected)
+//                    //realSingleExample(Apps.aiport.departureAirport, arrival,dateSelected)
+//                    progress_bar.visibility = View.VISIBLE
+//
+//                }else{
+//                    dateSelected =Helper.currentDate()
+////                    Helper.snakbar(parent_view!!, getString(R.string.select_travel_date),"")
+//
+//                }
+                dateSelected =Helper.currentDate()
+                GlobalScope.launch {
+                    fetchAllFlight(Apps.aiport.departureAirport, arrival,dateSelected!!)
                 }
 
 
