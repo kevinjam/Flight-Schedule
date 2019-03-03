@@ -1,5 +1,6 @@
 package com.interview.safeboda.activities.airport
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -16,17 +17,20 @@ import com.interview.safeboda.R
 import com.interview.safeboda.activities.airport.recycler.AirportAdapter
 import com.interview.safeboda.activities.airport.viewmodel.AirportViewModel
 import com.interview.safeboda.activities.schedules.SchedulePresenter
+import com.interview.safeboda.activities.splash.SplashPresenter
 import com.interview.safeboda.modelLayer.model.airport.Airport
 import com.interview.safeboda.modelLayer.model.airport.Payload
 import com.interview.safeboda.common.Constants.Companion.AIRPORT_ORIGIN_DEPARTURE
 import com.interview.safeboda.utils.helper.Helper
 import com.interview.safeboda.common.disposedBy
+import com.interview.safeboda.utils.helper.Apps
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.airlinelayout.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 
 class AirportActivity : AppCompatActivity(), AirportCallback, View.OnClickListener{
@@ -36,9 +40,9 @@ class AirportActivity : AppCompatActivity(), AirportCallback, View.OnClickListen
     var composit= CompositeDisposable()
     lateinit var airpline:List<Airport>
      var airportObject:Airport?= null
-    private var parent_view: View? = null
     private var presenter= SchedulePresenter()
-
+private var parent_view:View?=null
+    private var splashscreen=SplashPresenter()
 
     override fun onMethodCallback(view: View,airport: Airport?) {
 
@@ -52,26 +56,37 @@ class AirportActivity : AppCompatActivity(), AirportCallback, View.OnClickListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.airlinelayout)
+        parent_view = findViewById(android.R.id.content)
 
+
+        Helper.log("Airpot ${ Apps.aiport.token}")
 
         setSupportActionBar(toolbar)
         supportActionBar!!.title = "Select Flight"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        parent_view = findViewById(android.R.id.content)
-
         attachUI()
 
-
-        GlobalScope.launch {
-            requestAirport()
+        if (Helper.isConnectedToInternet(this)){
+            GlobalScope.launch {
+                requestAirport()
+            }
+        }else{
+            progress_circular.visibility = View.GONE
+            Helper.snakbar(parent_view!!, getString(R.string.no_internet),getString(R.string.try_again))
         }
+
+
+
 
 
     }
 
 
+
+
     fun requestAirport(){
+        println("Start Requesting the Flight")
         presenter.airportRx()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -81,14 +96,28 @@ class AirportActivity : AppCompatActivity(), AirportCallback, View.OnClickListen
             },{
                     error->
                 Helper.log("Errror ---$error")
-                no_network_message.visibility=View.VISIBLE
-                no_network_message.text = error.message
                 airplaine_recycler.visibility = View.GONE
                 progress_circular.visibility = View.GONE
+
+                if(error.localizedMessage.contains("401")){
+                    no_network_message.visibility = View.GONE
+
+                    Helper.snakbar(parent_view!!, getString(R.string.secret_key_error), "")
+
+                }else{
+                    Helper.snakbar(parent_view!!, error.localizedMessage!!, "")
+                    no_network_message.visibility=View.VISIBLE
+
+                }
+
+
 
             }).disposedBy(composit)
 
     }
+
+
+
 
 
     private fun attachUI() {
@@ -141,10 +170,7 @@ class AirportActivity : AppCompatActivity(), AirportCallback, View.OnClickListen
 
         adapter.setOnItemClickListener(object : AirportAdapter.OnItemClickListener {
             override fun onItemClick(view: View, obj: Airport, position: Int) {
-
-                Snackbar.make(parent_view!!, "airport : " + obj.name.name.countryName+ " Selected", Snackbar.LENGTH_SHORT).show()
-
-
+                Helper.snakbar(parent_view!!,obj.name.name.countryName ,"")
 
 
             }

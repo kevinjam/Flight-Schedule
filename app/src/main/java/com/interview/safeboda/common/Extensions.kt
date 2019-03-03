@@ -17,3 +17,4 @@ sealed class Result<out T> {
     data class Error<out T>(val throwable: Throwable) : Result<T>()
 }
 
+

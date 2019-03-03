@@ -5,13 +5,13 @@ import android.app.Application
 class Apps:Application() {
 
     companion object {
-        lateinit var aiport: AiportStart
+        lateinit var aiport: Pref
 
     }
 
 
     override fun onCreate() {
-        aiport = AiportStart(applicationContext)
+        aiport = Pref(applicationContext)
         super.onCreate()
 
         //RequestToken

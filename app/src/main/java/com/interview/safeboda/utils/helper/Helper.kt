@@ -3,11 +3,16 @@ package com.interview.safeboda.utils.helper
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.os.Build
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import android.view.WindowManager
+import android.widget.TextView
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
 import com.interview.safeboda.BuildConfig
 import com.interview.safeboda.R
@@ -57,8 +62,19 @@ object Helper {
     private var retrofit = builder.build()
 
     fun <S> createService(serviceClass: Class<S>): S {
-//        return createService(serviceClass, flight.aiport.token)
-        return createService(serviceClass, "88csjwu52c5t77dv9b7tvk4z") //TESTING
+
+        if (Apps.aiport.token.isBlank()){
+            //set a null
+
+            return createService(serviceClass, null)
+        }else{
+
+            return createService(serviceClass, Apps.aiport.token.replace("\\s",""))
+//                    return createService(serviceClass, "cn6wdck6z66u4msdfx2gtgbx") //TESTING
+
+        }
+
+      //  return createService(serviceClass, Apps.aiport.token)
     }
 
     fun <S> createService(
@@ -136,4 +152,27 @@ object Helper {
     }
     //endregion
 
+
+    @SuppressLint("WrongConstant")
+    fun snakbar(view: View, message:String, tryagain:String){
+        val snackbar = Snackbar
+            .make(view,  message, Snackbar.LENGTH_LONG)
+            .setAction(tryagain) {
+
+
+            }
+
+        // Changing message text color
+        snackbar.setActionTextColor(Color.WHITE)
+        //Changing action button text color
+        snackbar.duration = Snackbar.LENGTH_INDEFINITE
+        snackbar.view.setBackgroundColor(Color.GRAY)
+        snackbar.show()
+    }
+    fun currentDate() :String{
+        val df = SimpleDateFormat(DATEFORMATER)
+        val current = df.format(Calendar.getInstance().time)
+
+        return current
+    }
 }

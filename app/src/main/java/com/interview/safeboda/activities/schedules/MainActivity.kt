@@ -9,15 +9,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.google.android.material.snackbar.Snackbar
 import com.interview.safeboda.utils.helper.Apps
 import com.interview.safeboda.R
 import com.interview.safeboda.activities.airport.AirportActivity
 import com.interview.safeboda.activities.airport.FlightPresenter
-import com.interview.safeboda.activities.airport.recycler.AirportAdapter
 import com.interview.safeboda.activities.airport.viewmodel.AirportViewModel
 import com.interview.safeboda.activities.map.MapsActivity
-import com.interview.safeboda.common.Constants
 import com.interview.safeboda.common.Constants.Companion.AIRPORT_ARRIVAL
 import com.interview.safeboda.common.Constants.Companion.AIRPORT_ORIGINE
 import com.interview.safeboda.utils.helper.fonts.TextView_Roboto_Medium
@@ -29,8 +26,7 @@ import com.interview.safeboda.utils.helper.Helper
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
@@ -56,11 +52,12 @@ class MainActivity : AppCompatActivity() , ScheduleAdapter.ListItemClickListener
 
     private var departureModel :Airport ? = null
     private var arrivalModel :Airport ? = null
-
+    private var parent_view:View?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.main_activity)
+        parent_view = findViewById(android.R.id.content)
 
         mViewModel = ViewModelProviders.of(this).get(AirportViewModel::class.java)
 
@@ -79,6 +76,10 @@ class MainActivity : AppCompatActivity() , ScheduleAdapter.ListItemClickListener
         recycler_schedule.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         img_departure.setOnClickListener {view->
             checkScheduleAirport("DEPARTURE" , DEPARTURE_AIRPORT_CODE)
+//            Apps.aiport.token ="9caj4q6fhuxz7aruqgwcbgm9"
+//            Helper.log("Is Empy----------------${Apps.aiport.token}")
+//            Helper.log("Token---------------- ${Apps.aiport.token}")
+            Helper.log("Main ${ Apps.aiport.token}")
         }
 
         img_arrival.setOnClickListener {view->
@@ -95,7 +96,7 @@ class MainActivity : AppCompatActivity() , ScheduleAdapter.ListItemClickListener
 
     private fun initToolbar() {
         setSupportActionBar(toolbar)
-        supportActionBar!!.title = "Schedule airport"
+        supportActionBar!!.title = null
         Helper.setSystemBarColor(this@MainActivity)
     }
 
@@ -166,7 +167,9 @@ class MainActivity : AppCompatActivity() , ScheduleAdapter.ListItemClickListener
                         fetchAllFlight(Apps.aiport.departureAirport, arrival,dateSelected!!)
                     }
                 }else{
-                    Toast.makeText(this, "Please Select Travel Date ", Toast.LENGTH_LONG).show()
+                    dateSelected =Helper.currentDate()
+//                    Helper.snakbar(parent_view!!, getString(R.string.select_travel_date),"")
+
                 }
 
 
@@ -181,7 +184,8 @@ class MainActivity : AppCompatActivity() , ScheduleAdapter.ListItemClickListener
         }else{
             //AAL,ABJ
             //display an error
-            println("display an errok")
+            Helper.snakbar(parent_view!!, "Make sure Origin is Different from Departure","")
+
         }
     }
 
@@ -204,6 +208,7 @@ class MainActivity : AppCompatActivity() , ScheduleAdapter.ListItemClickListener
                 println("Error an👹 errok ${flightError.message}")
                 progress_bar.visibility = View.GONE
                 lyt_no_connection.visibility = View.VISIBLE
+                Helper.snakbar(parent_view!!, flightError.message!!,"")
 
 
 
@@ -230,8 +235,8 @@ class MainActivity : AppCompatActivity() , ScheduleAdapter.ListItemClickListener
             if (airport != null) {
                 if (requestCode == DEPARTURE_AIRPORT_CODE) {
                     println("DEPARTURE_AIRPORT_NAME ------${airport.name.name.countryName} ")
-                    txt_departure.text = airport.name.name.countryName
-                    txt_departure_code.text = airport.airporCode
+                    txt_departure.setText(airport.name.name.countryName)
+                  //  txt_departure_code.text = airport.airporCode
 
                     departureCode = airport.airporCode
                     departureModel = airport
@@ -242,8 +247,8 @@ class MainActivity : AppCompatActivity() , ScheduleAdapter.ListItemClickListener
 
                 } else if (requestCode == ARRIVAL_AIRPORT_CODE) {
                     println("ELSE ARRIVAL CODE ------ ${airport.name.name.countryName}")
-                    txt_arrival.text = airport.name.name.countryName
-                    txt_destination_code.text = airport.airporCode
+                    txt_arrival.setText(airport.name.name.countryName)
+                    //txt_destination_code.text = airport.airporCode
                     arrivalCode = airport.airporCode
                     collectAirportCode(departureCode, arrivalCode)
                     arrivalModel = airport

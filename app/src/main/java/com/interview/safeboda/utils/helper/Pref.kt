@@ -6,7 +6,7 @@ import com.interview.safeboda.common.Constants.Companion.TOKEN
 import com.interview.safeboda.common.Constants.Companion.DEPARTURE_AIRPORT
 import com.interview.safeboda.common.Constants.Companion.PREF_FILENAME
 
-class AiportStart(context:Context) {
+class Pref(context:Context) {
     val prefs: SharedPreferences = context.getSharedPreferences(PREF_FILENAME, 0)
 
 

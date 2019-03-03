@@ -14,4 +14,9 @@
     <dimen name="space30">30dp</dimen>
     <dimen name="space19">19dp</dimen>
     <dimen name="txt17">17sp</dimen>
+    <dimen name="space20">20dp</dimen>
+    <dimen name="space3">3dp</dimen>
+    <dimen name="space7">7dp</dimen>
+    <dimen name="space220">220dp</dimen>
+    <dimen name="space40">40dp</dimen>
 </resources>

@@ -13,4 +13,10 @@
     <string name="there_is_no_schedule_available">There is no Schedule Available</string>
     <string name="airports">Airports</string>
     <string name="pick_date">Pick Date</string>
+    <string name="where_will_go">Where will go?</string>
+    <string name="no_internet">There is no Internet</string>
+    <string name="try_again">Try Again</string>
+    <string name="select_travel_date">Please Select Travel Date</string>
+    <string name="destination">Destination</string>
+    <string name="secret_key_error">There is a problem using Secret Key , Make sure you get a correct Key</string>
 </resources>

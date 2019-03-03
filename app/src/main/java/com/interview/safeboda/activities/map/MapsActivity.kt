@@ -50,8 +50,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         arrival_txt.text = departureAirportLatitude.toString()
 
 
-        val departureLatLng = LatLng(departureAirportLatitude, departureAirportLong)
-       val deparMarker = googleMap.addMarker(MarkerOptions().position(departureLatLng).title(departure_airport!!.name.name.countryName))
+        val deparLatLng = LatLng(departureAirportLatitude, departureAirportLong)
+       val deparMarker = googleMap.addMarker(MarkerOptions().position(deparLatLng).title(departure_airport!!.name.name.countryName))
         deparMarker.showInfoWindow()
 
 
@@ -63,7 +63,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         googleMap.addPolyline(
             PolylineOptions()
-                .add(departureLatLng, arrivalLatLng)
+                .add(deparLatLng, arrivalLatLng)
                 .width(4f)
                 .color(Color.RED))
 
@@ -71,7 +71,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
         val bounds = LatLngBounds.Builder()
-            .include(departureLatLng)
+            .include(deparLatLng)
             .include(arrivalLatLng)
             .build()
         val displaySize = Point()
