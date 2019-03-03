@@ -61,14 +61,14 @@ object Helper {
 
     fun <S> createService(serviceClass: Class<S>): S {
 
-        if (Apps.aiport.token.isBlank()){
+        return if (Apps.aiport.token.isBlank()){
             //set a null
 
-            return createService(serviceClass, null)
+            createService(serviceClass, null)
         }else{
 
-//            return createService(serviceClass, Apps.aiport.token.replace("\\s",""))
-                    return createService(serviceClass, "mqg2vtghsdunwretu2vqf555") //TESTING
+    //            return createService(serviceClass, Apps.aiport.token.replace("\\s",""))
+            createService(serviceClass, "pc3zzmmdf5438tm8ujh7hjtb") //TESTING
 
         }
 
